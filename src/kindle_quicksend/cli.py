@@ -120,6 +120,16 @@ def run_setup() -> None:
         # Strip spaces from app password if copied with spaces
         password = pw_input.replace(" ", "")
 
+    if not password.isascii():
+        raise KqsError(
+            "Google App Password cannot contain special or accented characters.",
+            hint=(
+                "Google App Passwords only contain standard ASCII letters (a-z). "
+                "Ensure you did not enter your regular Google account password or accidental Hungarian letters. "
+                "Generate an App Password at: https://myaccount.google.com/apppasswords"
+            ),
+        )
+
     cfg = Config(
         kindle_email=kindle_email,
         sender_email=sender_email,

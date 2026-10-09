@@ -50,7 +50,7 @@ Follow these steps on each of your computers (desktop and laptops):
    *(Restart your PowerShell terminal if `ensurepath` modified PATH).*
 3. Install `kindle-quicksend`:
    ```powershell
-   pipx install git+https://github.com/<your-username>/kindle-quicksend.git
+   pipx install git+https://github.com/bceenaeiklmr/kindle-quicksend.git
    ```
 4. Run initial setup:
    ```powershell
@@ -60,8 +60,8 @@ Follow these steps on each of your computers (desktop and laptops):
 ### Option B: Local Editable Installation (Development)
 
 ```powershell
-git clone https://github.com/<your-username>/kindle-quicksend.git
-cd readerPush
+git clone https://github.com/bceenaeiklmr/kindle-quicksend.git
+cd kindle-quicksend
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -e ".[dev]"
@@ -120,7 +120,7 @@ To send any document directly from Windows File Explorer:
    ```cmd
    "%USERPROFILE%\.local\bin\kqs.exe" send --pause
    ```
-   *(If using a virtual environment, replace with the full path to `kqs.exe`, e.g. `C:\dev\projects\readerPush\.venv\Scripts\kqs.exe send --pause`)*.
+   *(If using a virtual environment, replace with the full path to `kqs.exe`, e.g. `C:\dev\GitHub\kindle-quicksend\.venv\Scripts\kqs.exe send --pause`)*.
 4. Name the shortcut **Kindle**.
 5. **Done!** You can now right-click any `.md` or `.txt` file in Windows Explorer, select **Send to** → **Kindle**. The console will show progress and wait for Enter before closing.
 

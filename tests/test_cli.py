@@ -80,3 +80,16 @@ def test_cli_send_success_mocked(monkeypatch, tmp_path: Path, capsys):
     captured = capsys.readouterr()
     assert "[OK] Submitted" in captured.out
     assert "Gmail accepted the email" in captured.out
+
+
+def test_cli_setup_unicode_password_rejected(monkeypatch, capsys):
+    inputs = iter(["myreader@kindle.com", "myself@gmail.com"])
+    monkeypatch.setattr("builtins.input", lambda prompt="": next(inputs))
+    monkeypatch.setattr("getpass.getpass", lambda prompt="": "bad_\u0171_password")
+
+    code = main(["setup"])
+    assert code == 1
+
+    captured = capsys.readouterr()
+    assert "cannot contain special or accented characters" in captured.err
+    assert "Google App Passwords" in captured.err

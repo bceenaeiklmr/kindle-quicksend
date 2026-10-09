@@ -174,3 +174,25 @@ def test_verify_login_auth_error(dummy_config: Config):
     with pytest.raises(KqsError) as exc_info:
         verify_login(dummy_config, "bad_pw", smtp_factory=lambda *a, **kw: AuthFailingServer(*a, **kw))
     assert "Gmail rejected your login credentials" in str(exc_info.value)
+
+
+def test_verify_login_unicode_error(dummy_config: Config):
+    class UnicodeFailingServer(MockSMTPServer):
+        def login(self, user, password):
+            raise UnicodeEncodeError("ascii", "\u0171", 0, 1, "ordinal not in range(128)")
+
+    with pytest.raises(KqsError) as exc_info:
+        verify_login(dummy_config, "bad_\u0171_pw", smtp_factory=lambda *a, **kw: UnicodeFailingServer(*a, **kw))
+    assert "non-ASCII characters" in str(exc_info.value)
+    assert "Google App Passwords" in exc_info.value.hint
+
+
+def test_send_unicode_error(dummy_book: Book, dummy_config: Config):
+    class UnicodeFailingServer(MockSMTPServer):
+        def login(self, user, password):
+            raise UnicodeEncodeError("ascii", "\u0171", 0, 1, "ordinal not in range(128)")
+
+    msg = build_message(dummy_book, dummy_config)
+    with pytest.raises(KqsError) as exc_info:
+        send(msg, dummy_config, "bad_\u0171_pw", smtp_factory=lambda *a, **kw: UnicodeFailingServer(*a, **kw))
+    assert "non-ASCII characters" in str(exc_info.value)

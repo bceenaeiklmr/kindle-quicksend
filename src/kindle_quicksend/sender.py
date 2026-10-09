@@ -84,6 +84,14 @@ def verify_login(
             f"SMTP verification failed: {err}",
             hint="Please verify your SMTP settings in config.toml.",
         ) from err
+    except UnicodeEncodeError as err:
+        raise KqsError(
+            f"Credentials contain invalid non-ASCII characters: {err}",
+            hint=(
+                "Google App Passwords only contain standard ASCII letters (a-z). "
+                "Make sure you did not enter your regular Google account password or accidental Hungarian characters."
+            ),
+        ) from err
 
 
 def send(
@@ -146,4 +154,13 @@ def send(
         raise KqsError(
             f"Failed to send email: {err}",
             hint="Check your SMTP configuration in config.toml.",
+        ) from err
+    except UnicodeEncodeError as err:
+        raise KqsError(
+            f"Credentials contain invalid non-ASCII characters: {err}",
+            hint=(
+                "Google App Passwords only contain standard ASCII letters (a-z). "
+                "Make sure you did not enter your regular Google account password or accidental Hungarian characters. "
+                "Run `kqs setup` to re-enter it."
+            ),
         ) from err
