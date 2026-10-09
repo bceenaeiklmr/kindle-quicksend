@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kindle-quicksend"
+version = "0.1.0"
+description = "Effortlessly send notes and documents to Kindle via Amazon Send to Kindle"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "pypandoc_binary==1.17",
+    "keyring>=25.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[project.scripts]
+kqs = "kindle_quicksend.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+kindle_quicksend = ["epub.css"]

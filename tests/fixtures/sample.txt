@@ -1,0 +1,10 @@
+Egyszerű szöveges jegyzet.
+
+Ez a második bekezdés, amely több sorból áll.
+Itt van a folytatása azonos bekezdésben.
+
+# Ez nem címsor!
+*Ez nem dőlt betű!*
+[Ez nem link](https://example.com)
+
+A fenti formázási jeleknek szó szerint kell megjelenniük a Kindle-ön.
